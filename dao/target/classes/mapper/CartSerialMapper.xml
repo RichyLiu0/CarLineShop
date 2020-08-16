@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.CarLineShop.entities.CarSerial">
+
+   <!-- &lt;!&ndash; 查询列表 &ndash;&gt;
+    <select id="getTop1" resultType="com.ly.mp.swcas.main.entities.Claim">
+        select * from t_swcas_bu_claim  order by CREATED_DATE DESC  limit 1
+    </select>
+
+
+    &lt;!&ndash; 查询列表 &ndash;&gt;
+    <select id="getClaimByWfId" resultType="com.ly.mp.swcas.main.entities.Claim">
+        select * from t_swcas_bu_claim  where WF_ID=  #{wfId}   limit 1
+    </select>
+
+    &lt;!&ndash;修改工作流状态&ndash;&gt;
+    <update id="updateWfStatus"  >
+
+        update t_swcas_bu_claim set wf_status=#{wfStatus} , wf_status_desc =#{wfStatusDesc} ,last_updated_date= now() where ID =#{id}
+
+    </update>
+
+
+    <select id="selectClaim" resultType="com.ly.mp.swcas.main.entities.Claim">
+        SELECT
+        b.* ,
+        f.TEXT,
+        f.DOCUMENT_DATE,
+        f.CROSS_AMT
+        FROM
+        t_swcas_bu_claim b
+        left JOIN t_swcas_bu_claim_finance f ON f.CLAIM_ID = b.ID
+        and f.IS_ENABLE='1'
+        where b.IS_ENABLE='1'
+        <if test="projectCode != null and projectCode !='' ">
+            and b.PROJECT_CODE = #{projectCode}
+        </if>
+        <if test="dStart != null">
+            and b.PUBLISH_DATE >= #{dStart}
+        </if>
+        <if test="dEnd != null">
+            and b.PUBLISH_DATE &lt; #{dEnd}
+        </if>
+        order by b.PROJECT_CODE  DESC
+    </select>
+
+
+    <select id="getApproveLogs" resultType="com.ly.mp.swcas.main.WraperEntity.WorkFlowApproveLog">
+     # 处理时间，处理人，操作节点，意见
+     #  a.BUSINESS_NO : 流程的WF_ID
+     select b.LOG_DATE ,b.HANDLER_NAME,c.step_name , d.LOG_CONTENT  from t_eap_wf_process_runtime a
+     inner join t_eap_wf_log b on a.PROCESS_GUID=b.PROCESS_GUID
+     inner join t_eap_wf_steppath_runtime c on b.STEP_PATH_GUID=c.STEP_PATH_GUID
+     left join t_eap_wf_logcontent d on b.LOG_ID=d.LOG_ID and d.LOGCONTENT_TYPE='0'
+     where a.BUSINESS_NO=#{wfId}  order by b.LOG_DATE asc
+    </select>-->
+
+
+
+</mapper>
